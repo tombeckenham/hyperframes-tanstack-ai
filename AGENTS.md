@@ -169,6 +169,12 @@ bun run deploy        # build + wrangler deploy (Workers + Containers + R2)
 - Cloudflare Containers bills per-10ms when warm. The container sleeps after
   10 minutes idle (configurable in `src/server/render-container.ts`).
 - Cloudflare Workers Paid plan is required for Containers.
+- `bun run dev` strips the `containers` / `durable_objects` / `migrations` /
+  `r2_buckets` blocks from the wrangler config (see `vite.config.ts`) so the
+  Cloudflare vite plugin doesn't try to build the render container in Docker
+  locally. As a consequence, `POST /api/render` and `GET /r/*` are non-functional
+  in `bun run dev` — use `wrangler dev --remote` or a deployed preview to
+  exercise those routes.
 
 ## Next steps
 
