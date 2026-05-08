@@ -14,7 +14,7 @@ Migration of the [hyperframes-vercel-template](https://github.com/heygen-com/hyp
 
 ## Scaffold history
 
-The project was scaffolded with the TanStack CLI:
+The project was originally scaffolded with the TanStack CLI:
 
 ```bash
 npx @tanstack/cli@latest create my-tanstack-app \
@@ -23,11 +23,17 @@ npx @tanstack/cli@latest create my-tanstack-app \
   --add-ons neon,drizzle,sentry,better-auth,tanstack-query
 ```
 
+The `neon`, `drizzle`, `better-auth`, and `sentry` add-ons were subsequently
+removed (along with the `.coderabbit.yaml` config) — this app no longer needs
+a database, auth, error tracking, or that review tooling. Their generated
+files, demo routes, env vars, and dependencies are gone. Re-add via the same
+CLI add-ons when needed.
+
 After scaffolding the following commands were run:
 
 ```bash
 npx @tanstack/intent@latest install   # wrote intent-skills block above
-npx @tanstack/intent@latest list      # 33 skills across 10 packages
+npx @tanstack/intent@latest list
 ```
 
 `@tanstack/ai` was added afterwards (the CLI does not yet ship it as a built-in
@@ -41,11 +47,7 @@ add-on) and demonstrated under `src/routes/ai.tsx`.
 | Data         | TanStack Query                                                    |
 | AI           | TanStack AI (`@tanstack/ai`)                                      |
 | Deployment   | Cloudflare Workers + Containers + R2                              |
-| Database     | Neon (Postgres) via Drizzle ORM                                   |
-| Auth         | Better Auth                                                       |
-| Observability| Sentry (`@sentry/tanstackstart-react`)                            |
 | Toolchain    | ESLint, TypeScript, Vitest, bun (package manager)                 |
-| Code review  | CodeRabbit (GitHub App, `.coderabbit.yaml`)                       |
 
 ## Render pipeline (Cloudflare Containers)
 
@@ -109,27 +111,19 @@ The preview routes (`/api/preview`, `/api/preview/$`, `/api/preview/comp/$`,
 | `/`                         | `src/routes/index.tsx`                | HyperFrames player + Render button |
 | `/ai`                       | `src/routes/ai.tsx`                   | TanStack AI demo (server fn + Query) |
 | `/about`                    | `src/routes/about.tsx`                | Scaffold default                   |
-| `/demo/*`                   | `src/routes/demo/*.tsx`               | Better-auth, Drizzle, Neon, Sentry, Query demos |
+| `/demo/tanstack-query`      | `src/routes/demo/tanstack-query.tsx`  | TanStack Query demo                |
 | `POST /api/render`          | `src/routes/api/render.ts`            | Container render → R2              |
 | `GET /api/preview`          | `src/routes/api/preview/index.ts`     | Bundled preview HTML               |
 | `GET /api/preview/*`        | `src/routes/api/preview/$.ts`         | Composition file proxy             |
 | `GET /api/preview/comp/*`   | `src/routes/api/preview/comp/$.ts`    | Sub-composition preview            |
 | `GET /api/runtime.js`       | `src/routes/api/runtime[.]js.ts`      | Inlined hyperframes runtime        |
 | `GET /r/*`                  | `src/routes/r/$.ts`                   | Public R2 fetch (rendered MP4s)    |
-| `* /api/auth/*`             | `src/routes/api/auth/$.ts`            | Better Auth handler                |
 
 ## Environment
 
 ```bash
-# .env.local — provided automatically by Neon Launchpad on the first dev run.
-DATABASE_URL=
-DATABASE_URL_POOLER=
-
-# Optional — for /ai demo to call a real provider.
+# .env.local — optional, used by /ai demo to call a real provider.
 ANTHROPIC_API_KEY=
-
-# Sentry — set during deploy.
-SENTRY_DSN=
 ```
 
 R2 / RENDER_CONTAINER bindings are configured in `wrangler.jsonc` and become
@@ -144,9 +138,8 @@ bun run dev           # vite dev on :3000
 bun run lint          # eslint
 bun run typecheck     # tsc --noEmit
 bun run test          # vitest
-bun run build         # vite build (writes .output/server)
+bun run build         # vite build (writes dist/server)
 bun run deploy        # build + wrangler deploy (Workers + Containers + R2)
-bun run db:push       # push drizzle schema to Neon
 ```
 
 ## Partner integrations
@@ -154,22 +147,8 @@ bun run db:push       # push drizzle schema to Neon
 | Partner       | Status                | Where                                                  |
 | ------------- | --------------------- | ------------------------------------------------------ |
 | Cloudflare    | ✅ wired               | `wrangler.jsonc`, `Dockerfile`, `src/server/*`         |
-| Neon          | ✅ wired (via CLI)     | `neon-vite-plugin.ts`, `src/db/`, `drizzle.config.ts`  |
-| Drizzle       | ✅ wired (via CLI)     | `drizzle.config.ts`, `src/db/schema.ts`                |
-| Sentry        | ✅ wired (via CLI)     | `instrument.server.mjs`                                |
-| Better Auth   | ✅ wired (via CLI)     | `src/lib/auth.ts`, `src/routes/api/auth/$.ts`          |
 | TanStack Query| ✅ wired (via CLI)     | `src/integrations/tanstack-query/*`                    |
 | TanStack AI   | ✅ wired (post-CLI)    | `src/routes/ai.tsx`                                    |
-| CodeRabbit    | ✅ config              | `.coderabbit.yaml` — install GH App separately         |
-
-### CodeRabbit setup
-
-CodeRabbit is repo tooling, not in-app code:
-
-1. Install the [CodeRabbit GitHub App](https://github.com/marketplace/coderabbitai) on the repo.
-2. The app reads `.coderabbit.yaml` from each PR's base branch.
-3. PRs against `main` / `develop` get automatic reviews; `legacy-source/**` is
-   excluded.
 
 ## Migration notes
 
@@ -185,10 +164,6 @@ CodeRabbit is repo tooling, not in-app code:
 
 ## Known gotchas
 
-- `bun install` requires `--legacy-peer-deps` semantics implicitly because
-  `vite-plugin-neon-new` peers on `vite@^6||^7` while we run vite@^8. Bun
-  resolves this without the flag; if you switch back to npm, pass
-  `--legacy-peer-deps`.
 - TanStack Router files with literal dots in the URL must escape via brackets:
   `runtime[.]js.ts` → `/api/runtime.js`.
 - Cloudflare Containers bills per-10ms when warm. The container sleeps after
@@ -204,6 +179,4 @@ CodeRabbit is repo tooling, not in-app code:
 - [ ] Wire `@tanstack/ai-anthropic` into `src/routes/ai.tsx` once an
       `ANTHROPIC_API_KEY` is provisioned.
 - [ ] Add a CI workflow (GitHub Actions) running `lint`, `typecheck`, and
-      `vitest` on PRs — CodeRabbit will review on top.
-- [ ] Provision Neon and run `bun run db:push` to materialize the Better Auth
-      schema, then exercise `/demo/better-auth`.
+      `vitest` on PRs.

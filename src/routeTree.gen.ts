@@ -14,15 +14,10 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RSplatRouteImport } from './routes/r/$'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
-import { Route as DemoNeonRouteImport } from './routes/demo/neon'
-import { Route as DemoDrizzleRouteImport } from './routes/demo/drizzle'
-import { Route as DemoBetterAuthRouteImport } from './routes/demo/better-auth'
 import { Route as ApiRuntimeDotjsRouteImport } from './routes/api/runtime[.]js'
 import { Route as ApiRenderRouteImport } from './routes/api/render'
 import { Route as ApiPreviewIndexRouteImport } from './routes/api/preview/index'
-import { Route as DemoSentryTestingRouteImport } from './routes/demo/sentry.testing'
 import { Route as ApiPreviewSplatRouteImport } from './routes/api/preview/$'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiPreviewCompSplatRouteImport } from './routes/api/preview/comp/$'
 
 const AiRoute = AiRouteImport.update({
@@ -50,21 +45,6 @@ const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   path: '/demo/tanstack-query',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoNeonRoute = DemoNeonRouteImport.update({
-  id: '/demo/neon',
-  path: '/demo/neon',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoDrizzleRoute = DemoDrizzleRouteImport.update({
-  id: '/demo/drizzle',
-  path: '/demo/drizzle',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoBetterAuthRoute = DemoBetterAuthRouteImport.update({
-  id: '/demo/better-auth',
-  path: '/demo/better-auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiRuntimeDotjsRoute = ApiRuntimeDotjsRouteImport.update({
   id: '/api/runtime.js',
   path: '/api/runtime.js',
@@ -80,19 +60,9 @@ const ApiPreviewIndexRoute = ApiPreviewIndexRouteImport.update({
   path: '/api/preview/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoSentryTestingRoute = DemoSentryTestingRouteImport.update({
-  id: '/demo/sentry/testing',
-  path: '/demo/sentry/testing',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPreviewSplatRoute = ApiPreviewSplatRouteImport.update({
   id: '/api/preview/$',
   path: '/api/preview/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPreviewCompSplatRoute = ApiPreviewCompSplatRouteImport.update({
@@ -107,14 +77,9 @@ export interface FileRoutesByFullPath {
   '/ai': typeof AiRoute
   '/api/render': typeof ApiRenderRoute
   '/api/runtime.js': typeof ApiRuntimeDotjsRoute
-  '/demo/better-auth': typeof DemoBetterAuthRoute
-  '/demo/drizzle': typeof DemoDrizzleRoute
-  '/demo/neon': typeof DemoNeonRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/r/$': typeof RSplatRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/preview/$': typeof ApiPreviewSplatRoute
-  '/demo/sentry/testing': typeof DemoSentryTestingRoute
   '/api/preview/': typeof ApiPreviewIndexRoute
   '/api/preview/comp/$': typeof ApiPreviewCompSplatRoute
 }
@@ -124,14 +89,9 @@ export interface FileRoutesByTo {
   '/ai': typeof AiRoute
   '/api/render': typeof ApiRenderRoute
   '/api/runtime.js': typeof ApiRuntimeDotjsRoute
-  '/demo/better-auth': typeof DemoBetterAuthRoute
-  '/demo/drizzle': typeof DemoDrizzleRoute
-  '/demo/neon': typeof DemoNeonRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/r/$': typeof RSplatRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/preview/$': typeof ApiPreviewSplatRoute
-  '/demo/sentry/testing': typeof DemoSentryTestingRoute
   '/api/preview': typeof ApiPreviewIndexRoute
   '/api/preview/comp/$': typeof ApiPreviewCompSplatRoute
 }
@@ -142,14 +102,9 @@ export interface FileRoutesById {
   '/ai': typeof AiRoute
   '/api/render': typeof ApiRenderRoute
   '/api/runtime.js': typeof ApiRuntimeDotjsRoute
-  '/demo/better-auth': typeof DemoBetterAuthRoute
-  '/demo/drizzle': typeof DemoDrizzleRoute
-  '/demo/neon': typeof DemoNeonRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/r/$': typeof RSplatRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/preview/$': typeof ApiPreviewSplatRoute
-  '/demo/sentry/testing': typeof DemoSentryTestingRoute
   '/api/preview/': typeof ApiPreviewIndexRoute
   '/api/preview/comp/$': typeof ApiPreviewCompSplatRoute
 }
@@ -161,14 +116,9 @@ export interface FileRouteTypes {
     | '/ai'
     | '/api/render'
     | '/api/runtime.js'
-    | '/demo/better-auth'
-    | '/demo/drizzle'
-    | '/demo/neon'
     | '/demo/tanstack-query'
     | '/r/$'
-    | '/api/auth/$'
     | '/api/preview/$'
-    | '/demo/sentry/testing'
     | '/api/preview/'
     | '/api/preview/comp/$'
   fileRoutesByTo: FileRoutesByTo
@@ -178,14 +128,9 @@ export interface FileRouteTypes {
     | '/ai'
     | '/api/render'
     | '/api/runtime.js'
-    | '/demo/better-auth'
-    | '/demo/drizzle'
-    | '/demo/neon'
     | '/demo/tanstack-query'
     | '/r/$'
-    | '/api/auth/$'
     | '/api/preview/$'
-    | '/demo/sentry/testing'
     | '/api/preview'
     | '/api/preview/comp/$'
   id:
@@ -195,14 +140,9 @@ export interface FileRouteTypes {
     | '/ai'
     | '/api/render'
     | '/api/runtime.js'
-    | '/demo/better-auth'
-    | '/demo/drizzle'
-    | '/demo/neon'
     | '/demo/tanstack-query'
     | '/r/$'
-    | '/api/auth/$'
     | '/api/preview/$'
-    | '/demo/sentry/testing'
     | '/api/preview/'
     | '/api/preview/comp/$'
   fileRoutesById: FileRoutesById
@@ -213,14 +153,9 @@ export interface RootRouteChildren {
   AiRoute: typeof AiRoute
   ApiRenderRoute: typeof ApiRenderRoute
   ApiRuntimeDotjsRoute: typeof ApiRuntimeDotjsRoute
-  DemoBetterAuthRoute: typeof DemoBetterAuthRoute
-  DemoDrizzleRoute: typeof DemoDrizzleRoute
-  DemoNeonRoute: typeof DemoNeonRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   RSplatRoute: typeof RSplatRoute
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiPreviewSplatRoute: typeof ApiPreviewSplatRoute
-  DemoSentryTestingRoute: typeof DemoSentryTestingRoute
   ApiPreviewIndexRoute: typeof ApiPreviewIndexRoute
   ApiPreviewCompSplatRoute: typeof ApiPreviewCompSplatRoute
 }
@@ -262,27 +197,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoTanstackQueryRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/neon': {
-      id: '/demo/neon'
-      path: '/demo/neon'
-      fullPath: '/demo/neon'
-      preLoaderRoute: typeof DemoNeonRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/drizzle': {
-      id: '/demo/drizzle'
-      path: '/demo/drizzle'
-      fullPath: '/demo/drizzle'
-      preLoaderRoute: typeof DemoDrizzleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/better-auth': {
-      id: '/demo/better-auth'
-      path: '/demo/better-auth'
-      fullPath: '/demo/better-auth'
-      preLoaderRoute: typeof DemoBetterAuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/runtime.js': {
       id: '/api/runtime.js'
       path: '/api/runtime.js'
@@ -304,25 +218,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPreviewIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/sentry/testing': {
-      id: '/demo/sentry/testing'
-      path: '/demo/sentry/testing'
-      fullPath: '/demo/sentry/testing'
-      preLoaderRoute: typeof DemoSentryTestingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/preview/$': {
       id: '/api/preview/$'
       path: '/api/preview/$'
       fullPath: '/api/preview/$'
       preLoaderRoute: typeof ApiPreviewSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/preview/comp/$': {
@@ -341,14 +241,9 @@ const rootRouteChildren: RootRouteChildren = {
   AiRoute: AiRoute,
   ApiRenderRoute: ApiRenderRoute,
   ApiRuntimeDotjsRoute: ApiRuntimeDotjsRoute,
-  DemoBetterAuthRoute: DemoBetterAuthRoute,
-  DemoDrizzleRoute: DemoDrizzleRoute,
-  DemoNeonRoute: DemoNeonRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   RSplatRoute: RSplatRoute,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiPreviewSplatRoute: ApiPreviewSplatRoute,
-  DemoSentryTestingRoute: DemoSentryTestingRoute,
   ApiPreviewIndexRoute: ApiPreviewIndexRoute,
   ApiPreviewCompSplatRoute: ApiPreviewCompSplatRoute,
 }

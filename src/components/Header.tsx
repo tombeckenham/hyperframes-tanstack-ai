@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router'
-import BetterAuthHeader from '../integrations/better-auth/header-user.tsx'
 import ThemeToggle from './ThemeToggle'
 
 export default function Header() {
@@ -39,43 +38,19 @@ export default function Header() {
           >
             Docs
           </a>
-          <details className="relative w-full sm:w-auto">
-            <summary className="nav-link list-none cursor-pointer">
-              Demos
-            </summary>
-            <div className="mt-2 min-w-56 rounded-xl border border-[var(--line)] bg-[var(--header-bg)] p-2 shadow-lg sm:absolute sm:right-0">
-              <a
-                href="/demo/neon"
-                className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
-              >
-                Neon
-              </a>
-              <a
-                href="/demo/drizzle"
-                className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
-              >
-                Drizzle
-              </a>
-              <a
-                href="/demo/sentry/testing"
-                className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
-              >
-                Sentry
-              </a>
-              <a
-                href="/demo/better-auth"
-                className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
-              >
-                Better Auth
-              </a>
-              <a
-                href="/demo/tanstack-query"
-                className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
-              >
-                TanStack Query
-              </a>
-            </div>
-          </details>
+          <Link
+            to="/ai"
+            className="nav-link"
+            activeProps={{ className: 'nav-link is-active' }}
+          >
+            AI
+          </Link>
+          <a
+            href="/demo/tanstack-query"
+            className="nav-link"
+          >
+            Query
+          </a>
         </div>
 
         <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
@@ -107,8 +82,6 @@ export default function Header() {
               />
             </svg>
           </a>
-          <BetterAuthHeader />
-
           <ThemeToggle />
         </div>
       </nav>
